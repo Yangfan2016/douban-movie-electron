@@ -1,0 +1,40 @@
+.page-search{
+  position: relative;
+  width: 80%;
+  margin: 30px auto;
+}
+
+.page-search .search-result-list{
+  width: 70%;
+}
+
+.page-search .search-result-list .item-img{
+  width:160px;
+  height:220px;
+  border-radius: 5px;
+}
+
+.page-search .ant-list-split .ant-list-item{
+  border:none;
+}
+
+.page-search .rate-box{
+  width:30%;
+}
+
+.page-search .rate-box .ant-affix{
+  z-index:9;
+}
+
+.page-search .rate-box .goodbox .goodbox-rate{
+  margin:5px 10px;
+  padding: 5px 30px;
+}
+
+.page-search .rate-box .goodbox .goodbox-rate .title{
+  font-size: .8rem;
+}
+
+.page-search .rate-box .goodbox .goodbox-rate .rank{
+  font-size: 1rem;
+}
