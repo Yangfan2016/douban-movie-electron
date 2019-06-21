@@ -16,8 +16,11 @@ body, div, p, span, a, img, ul, ol, h1, h2, h3, h4, h5, h6 {
   --highlightColor: #f00;
   --backColor: #2d2e36;
   --foreColor: #fff;
+  --shallowColor: rgba(255, 255, 255, .2);
   --oneOfSix: 16.666667%;
   --sideWidth: 200px;
+  --pageWidth: 1000px;
+  --headBarHeight: 80px;
 }
 
 @font-face {
@@ -34,6 +37,7 @@ body {
   font-family: numFont, PingFangSC-Regular, Tahoma, "Microsoft Yahei", sans-serif;
   background-color: transparent;
   color: var(--foreColor);
+  user-select: none;
 }
 
 .clearfix:after {
@@ -70,13 +74,34 @@ body {
 .win-side {
   position: fixed;
   width: var(--sideWidth);
-  top: 0;
+  top: var(--headBarHeight);
   bottom: 0;
 }
 
 .page {
-  width: 1000px;
+  width: var(--pageWidth);
   margin: 0 auto;
+}
+
+.menu-list {
+  padding: 20px 0;
+}
+
+.menu-list .list-item {
+  padding: 10px 20px;
+}
+
+.menu-list .list-item .title {
+  padding: 0 0 0 5px;
+  border-left-width: 1px;
+  border-left-style: solid;
+  border-left-color: transparent;
+  color: var(--foreColor);
+  transition: all 0.2 ease;
+}
+
+.menu-list .list-item .title:hover {
+  color: var(--hoverColor);
 }
 
 /* ant-tag */

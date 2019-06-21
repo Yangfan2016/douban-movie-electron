@@ -23,7 +23,7 @@ function CustomRoute(props: iRouterViewProps) {
   if (matchRoute) {
     return <Route exact={!matchRoute.hasChild} path={matchRoute.path} component={matchRoute.component} />
   }
-  return <Redirect to='/404' />
+  return <Redirect to='/' />
 }
 
 export default function (props: iRouterViewProps) {

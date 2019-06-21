@@ -23,7 +23,7 @@ function TopNav(props: iTopNavProps) {
       searchStr = hostShowTitle;
     }
 
-    let query:iSearchParams = {
+    let query: iSearchParams = {
       q: searchStr,
     };
 
@@ -91,69 +91,92 @@ function TopNav(props: iTopNavProps) {
   function renderTopBar() {
     return (
       <div className="header-bar">
-        <div className="bar-container clearfix">
-          <span className="bar-top">
-            <Link to="/home">
+        <div>
+          <div className="bar-container clearfix">
+            <span className="bar-top">
               <div className="logo"></div>
               <div className="slot-title">{props.slotTitle}</div>
-            </Link>
-          </span>
-          <div className="search">
-            <div className="search-box">
-              <div className="search-btn" onClick={navToSearch}>
-                <Icon type="search" />
-                <span>全网搜</span>
+            </span>
+            <div className="search">
+              <div className="search-box">
+                <div className="search-btn" onClick={navToSearch}>
+                  <Icon type="search" />
+                  <span>全网搜</span>
+                </div>
+                <input className="search-input"
+                  placeholder={hostShowTitle}
+                  value={searchStr}
+                  onChange={getSearch}
+                  onClick={ev => {
+                    ev.nativeEvent.stopImmediatePropagation();
+                    setIsShowSuggestBox(true);
+                  }}
+                  onKeyDown={ev => {
+                    setIsShowSuggestBox(true);
+                    if (ev.keyCode === 13) {
+                      setIsShowSuggestBox(false);
+                      navToSearch();
+                    }
+                  }} />
               </div>
-              <input className="search-input"
-                placeholder={hostShowTitle}
-                value={searchStr}
-                onChange={getSearch}
-                onClick={ev => {
-                  ev.nativeEvent.stopImmediatePropagation();
-                  setIsShowSuggestBox(true);
-                }}
-                onKeyDown={ev => {
-                  setIsShowSuggestBox(true);
-                  if (ev.keyCode === 13) {
-                    setIsShowSuggestBox(false);
-                    navToSearch();
-                  }
-                }} />
-            </div>
-            <div className="search-list" style={
-              {
-                "display": isShowSuggestBox ? "block" : "none",
+              <div className="search-list" style={
+                {
+                  "display": isShowSuggestBox ? "block" : "none",
+                }
               }
-            }
-              onClick={ev => { ev.nativeEvent.stopImmediatePropagation() }}>
-              {
-                isShowTipsPanel ?
-                  <div>
-                    <div className="list-history" style={
-                      {
-                        "display": searchHistory.length > 0 ? "block" : "none",
-                      }
-                    }>
-                      <h4 className="panel-title">历史记录</h4>
-                      <ul>
+                onClick={ev => { ev.nativeEvent.stopImmediatePropagation() }}>
+                {
+                  isShowTipsPanel ?
+                    <div>
+                      <div className="list-history" style={
                         {
-                          searchHistory.map((item: iSearchHistory, index: number) => {
-                            return (
-                              <li className="list-item" key={index}>
-                                <Link to={`/detail/${item.id}`}>
-                                  <h5 className="title">{item.title}</h5>
-                                </Link>
-                              </li>
-                            );
-                          })
+                          "display": searchHistory.length > 0 ? "block" : "none",
                         }
-                      </ul>
+                      }>
+                        <h4 className="panel-title">历史记录</h4>
+                        <ul>
+                          {
+                            searchHistory.map((item: iSearchHistory, index: number) => {
+                              return (
+                                <li className="list-item" key={index}>
+                                  <Link to={`/detail/${item.id}`}>
+                                    <h5 className="title">{item.title}</h5>
+                                  </Link>
+                                </li>
+                              );
+                            })
+                          }
+                        </ul>
+                      </div>
+                      <div className="list-hot">
+                        <h4 className="panel-title">热映</h4>
+                        <ul>
+                          {
+                            hotShowList.slice(0, 8).map((item: any, index: number) => {
+                              return (
+                                <li className="list-item" key={index}>
+                                  <Link to={`/detail/${item.id}`}
+                                    onClick={(ev: any) => {
+                                      addSearchHistory({
+                                        id: item.id,
+                                        title: item.title,
+                                      });
+                                    }}>
+                                    <span className="index">{+index + 1}</span>
+                                    <span className="title">{item.title}</span>
+                                  </Link>
+                                </li>
+                              );
+                            })
+                          }
+                        </ul>
+                      </div>
                     </div>
-                    <div className="list-hot">
-                      <h4 className="panel-title">热映</h4>
+                    :
+                    <div className="list-suggest">
                       <ul>
                         {
-                          hotShowList.slice(0, 8).map((item: any, index: number) => {
+                          suggestList.map((item: any, index: number) => {
                             return (
                               <li className="list-item" key={index}>
                                 <Link to={`/detail/${item.id}`}
@@ -163,8 +186,8 @@ function TopNav(props: iTopNavProps) {
                                       title: item.title,
                                     });
                                   }}>
-                                  <span className="index">{+index + 1}</span>
-                                  <span className="title">{item.title}</span>
+                                  <h5 className="title">{item.title}</h5>
+                                  <p className="origin_title">{item.original_title}</p>
                                 </Link>
                               </li>
                             );
@@ -172,31 +195,8 @@ function TopNav(props: iTopNavProps) {
                         }
                       </ul>
                     </div>
-                  </div>
-                  :
-                  <div className="list-suggest">
-                    <ul>
-                      {
-                        suggestList.map((item: any, index: number) => {
-                          return (
-                            <li className="list-item" key={index}>
-                              <Link to={`/detail/${item.id}`}
-                                onClick={(ev: any) => {
-                                  addSearchHistory({
-                                    id: item.id,
-                                    title: item.title,
-                                  });
-                                }}>
-                                <h5 className="title">{item.title}</h5>
-                                <p className="origin_title">{item.original_title}</p>
-                              </Link>
-                            </li>
-                          );
-                        })
-                      }
-                    </ul>
-                  </div>
-              }
+                }
+              </div>
             </div>
           </div>
         </div>

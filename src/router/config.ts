@@ -3,8 +3,6 @@ import Detail from '../pages/Detail';
 import Box from '../pages/Box';
 import Search from '../pages/Search';
 
-import NotFound from '../errors/NotFound';
-
 export default [
   {
     path: '/home',
@@ -21,9 +19,5 @@ export default [
   {
     path: '/search',
     component: Search,
-  },
-  {
-    path: '/404',
-    component: NotFound,
   }
 ];

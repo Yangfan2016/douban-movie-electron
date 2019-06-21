@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Card, Tag, Carousel } from 'antd';
 import { CardListTop250Skeleton, CardListSkeleton, ListSkeleton } from "../skeletons/Home";
-import TopNav from '../components/TopNav';
 import { getHotShowing, getNew, getGoodbox, getWeeklyMovie, getTop250 } from "../api";
 import * as _ from "lodash";
 import LazyLoad from "react-lazy-load";
@@ -32,6 +31,7 @@ export default function () {
   let [isLoadingGoodBox, setIsLoadingGoodBox] = useState(true);
   let [isLoadingWeeklyBox, setIsLoadingWeeklyBox] = useState(true);
   let [isLoadingTop250, setIsLoadingTop250] = useState(true);
+  let [searchHistory] = useState(getSearchHistory().slice(0));
 
   // temp
   let bannerList = [
@@ -41,6 +41,12 @@ export default function () {
     imgBanner004,
     imgBanner005
   ];
+
+  function getSearchHistory() {
+    const KEY = "SEARCH_H";
+    let cache = JSON.parse(localStorage.getItem(KEY) || "[]");
+    return cache;
+  }
 
   function renderTop250() {
     let len = top250List.length;
@@ -142,35 +148,81 @@ export default function () {
 
   return (
     <>
-      <div className="header">
-        <TopNav />
-      </div>
-      <div className="mian-box">
-        <div className="page header">
-          <div className="header-banner">
-            <Carousel autoplay>
-              {bannerList.map((item: any, index: number) => {
+      <div className="page header flex-box" id="hash-top">
+        <div className="header-banner">
+          <Carousel autoplay>
+            {bannerList.map((item: any, index: number) => {
+              return (
+                <div
+                  className="banner-item"
+                  key={index}>
+                  <img src={item} alt="banner" />
+                </div>
+              );
+            })}
+          </Carousel>
+        </div>
+        <div className="header-history">
+          <h4 className="top-title">最近在看</h4>
+          <ul>
+            {
+              searchHistory.map((item: iSearchHistory, index: number) => {
                 return (
-                  <div
-                    className="banner-item"
-                    key={index}>
-                    <img src={item} alt="banner" />
-                  </div>
+                  <li className="list-item" key={index}>
+                    <Link to={`/detail/${item.id}`}>
+                      <h5 className="title">{item.title}</h5>
+                    </Link>
+                  </li>
                 );
-              })}
-            </Carousel>
+              })
+            }
+          </ul>
+        </div>
+      </div>
+      <div className="page page-home">
+        <div className="block block-hotshow" id="hash-hotshow">
+          <div className="line-raw">
+            <h2 className="raw-title">正在热映</h2>
+          </div>
+          <div className="cards-box clearfix">
+            {
+              isLoadingHotShow ?
+                <CardListSkeleton column={6} /> :
+                hotShowList.map((item: any, index: number) => {
+                  return (
+                    <div className="card-container" key={index}>
+                      <Card
+                        className="movie-card"
+                        hoverable
+                        cover={
+                          <Link to={`/detail/${item.id}`}>
+                            <LazyLoad height={IMG_HEIGHT} offsetTop={500}>
+                              <img src={item.images.small} />
+                            </LazyLoad>
+                          </Link>
+                        }
+                      >
+                        <Tag className="img-tag tag-orange">{item.rating.average}</Tag>
+                        <Card.Meta
+                          title={item.title}
+                          description={item.genres.join("/")}
+                        />
+                      </Card>
+                    </div>
+                  );
+                })}
           </div>
         </div>
-        <div className="page page-home">
-          <div className="block block-hotshow">
-            <div className="line-raw">
-              <h2 className="raw-title">正在热映</h2>
-            </div>
+        <div className="block block-newmovie" id="hash-newmovie">
+          <div className="line-raw">
+            <h2 className="raw-title">新片榜</h2>
+          </div>
+          <div className="flex-box">
             <div className="cards-box clearfix">
               {
-                isLoadingHotShow ?
-                  <CardListSkeleton column={6} /> :
-                  hotShowList.map((item: any, index: number) => {
+                isLoadingNewMovie ?
+                  <CardListSkeleton column={4} /> :
+                  newMovieList.map((item: any, index: number) => {
                     return (
                       <div className="card-container" key={index}>
                         <Card
@@ -194,150 +246,115 @@ export default function () {
                     );
                   })}
             </div>
-          </div>
-          <div className="block block-newmovie">
-            <div className="line-raw">
-              <h2 className="raw-title">新片榜</h2>
-            </div>
-            <div className="flex-box">
-              <div className="cards-box clearfix">
+            <div className="rate-box">
+              <div className="line-raw">
+                <h2 className="raw-title">北美票房榜</h2>
+                <p>{boxLastDate} 更新/美元</p>
+              </div>
+              <ul className="goodbox">
                 {
-                  isLoadingNewMovie ?
-                    <CardListSkeleton column={4} /> :
-                    newMovieList.map((item: any, index: number) => {
+                  isLoadingGoodBox ?
+                    <ListSkeleton row={2} /> :
+                    goodBoxList.map((item: any, index: number) => {
+                      let { rank, box, subject } = item;
+                      let { title, id, rating, collect_count } = subject;
+                      let { average } = rating;
+
+                      let isNew = item.new;
+
+                      let summaryList = [];
+                      let summary = "";
+
+                      if (isNew) {
+                        summaryList.push("<span class='box-new'>新上榜</span>");
+                      }
+
+                      summaryList.push(`${average || 0} 分`);
+                      summaryList.push(`${collect_count} 收藏`);
+                      summary = summaryList.join(" / ");
+
                       return (
-                        <div className="card-container" key={index}>
-                          <Card
-                            className="movie-card"
-                            hoverable
-                            cover={
-                              <Link to={`/detail/${item.id}`}>
-                                <LazyLoad height={IMG_HEIGHT} offsetTop={500}>
-                                  <img src={item.images.small} />
-                                </LazyLoad>
-                              </Link>
-                            }
-                          >
-                            <Tag className="img-tag tag-orange">{item.rating.average}</Tag>
-                            <Card.Meta
-                              title={item.title}
-                              description={item.genres.join("/")}
-                            />
-                          </Card>
-                        </div>
+                        <li className="goodbox-rate" key={index}>
+                          <Link to={`/detail/${id}`}>
+                            <h3 className="title">{title}</h3>
+                            <p className="summary" dangerouslySetInnerHTML={{ __html: summary }}></p>
+                            <span className="rank">{rank}</span>
+                            <span className="box">{box / 1e4} 万</span>
+                          </Link>
+                        </li>
                       );
-                    })}
-              </div>
-              <div className="rate-box">
-                <div className="line-raw">
-                  <h2 className="raw-title">北美票房榜</h2>
-                  <p>{boxLastDate} 更新/美元</p>
-                </div>
-                <ul className="goodbox">
-                  {
-                    isLoadingGoodBox ?
-                      <ListSkeleton row={2} /> :
-                      goodBoxList.map((item: any, index: number) => {
-                        let { rank, box, subject } = item;
-                        let { title, id, rating, collect_count } = subject;
-                        let { average } = rating;
-
-                        let isNew = item.new;
-
-                        let summaryList = [];
-                        let summary = "";
-
-                        if (isNew) {
-                          summaryList.push("<span class='box-new'>新上榜</span>");
-                        }
-
-                        summaryList.push(`${average || 0} 分`);
-                        summaryList.push(`${collect_count} 收藏`);
-                        summary = summaryList.join(" / ");
-
-                        return (
-                          <li className="goodbox-rate" key={index}>
-                            <Link to={`/detail/${id}`}>
-                              <h3 className="title">{title}</h3>
-                              <p className="summary" dangerouslySetInnerHTML={{ __html: summary }}></p>
-                              <span className="rank">{rank}</span>
-                              <span className="box">{box / 1e4} 万</span>
-                            </Link>
-                          </li>
-                        );
-                      })
-                  }
-                </ul>
-              </div>
+                    })
+                }
+              </ul>
             </div>
           </div>
-          <div className="block block-weekly">
-            <div className="line-raw">
-              <h2 className="raw-title">一周口碑榜</h2>
-              <div className="spotbox">
-                <div className="spot"></div>
-                <div className="spot"></div>
-                <div className="spot"></div>
-              </div>
+        </div>
+        <div className="block block-weekly" id="hash-weekly">
+          <div className="line-raw">
+            <h2 className="raw-title">一周口碑榜</h2>
+            <div className="spotbox">
+              <div className="spot"></div>
+              <div className="spot"></div>
+              <div className="spot"></div>
             </div>
-            <div className="cards-box weekly-box clearfix">
-              {
+          </div>
+          <div className="cards-box weekly-box clearfix">
+            {
+              weeklyBox.slice(0, 6).map((item: any, index: number) => {
+                let { subject } = item;
+                let { rating, title } = subject;
+                let { average } = rating;
+                return (
+                  <div className="card-container" key={index}>
+                    <div className="rate">{average} 分</div>
+                    <div className="title">{title}</div>
+                    <div className="dot"></div>
+                  </div>
+                );
+              })
+            }
+          </div>
+          <div className="cards-box clearfix">
+            {
+              isLoadingWeeklyBox ?
+                <CardListSkeleton column={6} /> :
                 weeklyBox.slice(0, 6).map((item: any, index: number) => {
                   let { subject } = item;
-                  let { rating, title } = subject;
+                  let { rating, title, id, images, genres } = subject;
                   let { average } = rating;
                   return (
                     <div className="card-container" key={index}>
-                      <div className="rate">{average} 分</div>
-                      <div className="title">{title}</div>
-                      <div className="dot"></div>
+                      <Card
+                        className="movie-card"
+                        hoverable
+                        cover={
+                          <Link to={`/detail/${id}/#`}>
+                            <LazyLoad height={IMG_HEIGHT} offsetTop={500}>
+                              <img src={images.small} />
+                            </LazyLoad>
+                          </Link>
+                        }
+                      >
+                        <Tag className="img-tag tag-orange">{average}</Tag>
+                        <Card.Meta
+                          title={title}
+                          description={genres.join("/")}
+                        />
+                      </Card>
                     </div>
                   );
-                })
-              }
-            </div>
-            <div className="cards-box clearfix">
-              {
-                isLoadingWeeklyBox ?
-                  <CardListSkeleton column={6} /> :
-                  weeklyBox.slice(0, 6).map((item: any, index: number) => {
-                    let { subject } = item;
-                    let { rating, title, id, images, genres } = subject;
-                    let { average } = rating;
-                    return (
-                      <div className="card-container" key={index}>
-                        <Card
-                          className="movie-card"
-                          hoverable
-                          cover={
-                            <Link to={`/detail/${id}/#`}>
-                              <LazyLoad height={IMG_HEIGHT} offsetTop={500}>
-                                <img src={images.small} />
-                              </LazyLoad>
-                            </Link>
-                          }
-                        >
-                          <Tag className="img-tag tag-orange">{average}</Tag>
-                          <Card.Meta
-                            title={title}
-                            description={genres.join("/")}
-                          />
-                        </Card>
-                      </div>
-                    );
-                  })}
-            </div>
+                })}
           </div>
-          <div className="block block-top250">
-            <div className="line-raw">
-              <h2 className="raw-title">Top 250</h2>
-            </div>
-            {
-              isLoadingTop250 ?
-                <CardListTop250Skeleton /> :
-                renderTop250()
-            }
+        </div>
+        <div className="block block-top250" id="hash-top250">
+          <div className="line-raw">
+            <h2 className="raw-title">Top 250</h2>
           </div>
+          {
+            isLoadingTop250 ?
+              <CardListTop250Skeleton /> :
+              renderTop250()
+          }
         </div>
       </div>
     </>

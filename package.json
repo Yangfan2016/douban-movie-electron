@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
+  "homepage": ".",
   "author": "yangfan2016 <15234408101@163.com>",
   "license": "MIT",
   "dependencies": {
@@ -70,11 +71,11 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "NODE_ENV=production node scripts/build.js",
     "test": "node scripts/test.js",
-    "serve": "node server/controllers/index.js",
-    "electron-start": "nodemon --watch ./main.js --exec 'electron .'",
-    "electron-dev": "yarn start & yarn electron-start"
+    "server": "node server/controllers/index.js",
+    "electron-dev": "nodemon --watch ./main.js --exec 'yarn start & NODE_ENV=development electron .'",
+    "electron-start": "nodemon --watch ./main.js --exec 'NODE_ENV=production && electron .'"
   },
   "eslintConfig": {
     "extends": "react-app"

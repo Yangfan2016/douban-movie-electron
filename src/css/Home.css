@@ -5,6 +5,20 @@
   --rankOther: #666;
   --cardImgHeight: 220px;
   --cardBigImgHeight: calc(2 * var(--cardImgHeight));
+  --headBannerWidth: 800px;
+  --headHistroyWidth: calc(var(--pageWidth) - var(--headBannerWidth));
+}
+
+::-moz-placeholder {
+  color: var( --foreColor);
+}
+
+::-webkit-input-placeholder {
+  color: var( --foreColor);
+}
+
+:-ms-input-placeholder {
+  color: var( --foreColor);
 }
 
 /* overwritten ant-design */
@@ -27,7 +41,7 @@
 
 .mian-box {
   position: fixed;
-  top: 80px;
+  top: var(--headBarHeight);
   left: var(--sideWidth);
   right: 0;
   bottom: 0;
@@ -41,9 +55,9 @@
 .header .header-bar {
   position: fixed;
   top: 0;
-  left: var(--sideWidth);
+  left: 0;
   right: 0;
-  padding: 20px 0;
+  padding: 20px 0 20px var(--sideWidth);
   z-index: 2;
   background-color: var(--backColor);
   /* drag app window */
@@ -51,7 +65,8 @@
 }
 
 .bar-container {
-  margin: 0 10%;
+  width: var(--pageWidth);
+  margin: 0 auto;
 }
 
 .header .header-bar .logo {
@@ -77,7 +92,7 @@
   float: right;
   height: 40px;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, .2);
+  background-color: var(--shallowColor);
   box-shadow: 0 4px 18px rgba(17, 18, 38, .07);
   border: 1px solid transparent;
   overflow: hidden;
@@ -187,6 +202,35 @@
   display: initial;
   width: 100%;
   height: 100%;
+}
+
+.header .header-history {
+  width: calc(var(--headHistroyWidth) - 15px);
+  margin: 0 0 0 15px;
+  background-color: var(--shallowColor);
+}
+
+.header .header-history .list-item {
+  padding: 8px 15px;
+}
+
+.header .header-history .list-item:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.header .header-history .top-title {
+  padding: 20px 15px;
+  color: var(--foreColor);
+}
+
+.header .header-history .title {
+  color: var(--foreColor);
+  transition: all 0.2s ease;
+}
+
+.header .header-history .list-item:hover .title {
+  transform: translateX(10px);
+  color: var(--hoverColor);
 }
 
 .page-home .block {
@@ -386,7 +430,7 @@
   position: relative;
   top: -45px;
   right: 0;
-  width: calc(1000px - var(--oneOfSix) * 4);
+  width: calc(var(-pageWidth) - var(--oneOfSix) * 4);
 }
 
 .rate-box .goodbox {
