@@ -17,3 +17,4 @@ sketch
 /build
 /server/build
 /src/api/mock.js
+dist

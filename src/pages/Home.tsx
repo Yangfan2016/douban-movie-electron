@@ -96,7 +96,7 @@ export default function () {
 
   }
 
-  useEffect(() => {
+  useEffect(()=> {
 
     getHotShowing({
       start: 0,

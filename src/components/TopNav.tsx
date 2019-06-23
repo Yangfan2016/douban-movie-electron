@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, Link } from 'react-router-dom';
-import { Icon, Affix } from 'antd';
+import { Icon } from 'antd';
 import { getHotShowing, getContentBySearch } from "../api";
 import * as _ from "lodash";
 import { serialize } from '../utils';
@@ -14,7 +14,6 @@ function TopNav(props: iTopNavProps) {
   let [searchStr, setSearchStr] = useState("");
   let [isShowSuggestBox, setIsShowSuggestBox] = useState(false);
   let [isShowTipsPanel, setIsShowTipsPanel] = useState(true);
-  let [isTopNavFixed, setIsTopNavFixed] = useState(false);
 
   function navToSearch() {
     searchStr = searchStr.trim();

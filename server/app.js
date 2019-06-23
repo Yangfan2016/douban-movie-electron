@@ -1,9 +1,6 @@
 const Koa = require("koa");
 const proxy = require("koa-server-http-proxy");
 const app = new Koa();
-const { server } = require("../../app.config");
-
-const PORT = server.port;
 
 // proxy
 app.use(proxy('/api', {
@@ -21,7 +18,4 @@ app.use(proxy('/bing', {
   },
 }));
 
-app.listen(PORT, () => {
-  console.log(server.url);
-});
-
+module.exports=app;

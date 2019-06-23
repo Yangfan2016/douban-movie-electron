@@ -30,6 +30,7 @@
 - [ ] 电影详情页 剧照 需要等待所有图片加载完，才能获取到宽度
 - [x] 首页，top250 的第一个大图一开始会罩住页面其他内容
 - [x] 轮播图同时设置 effect="fade" 和 autoplay 导致点击切换 slide 失效 https://github.com/akiran/react-slick/issues/255
+- [ ] 首页，需要等待所有数据加完完，才可以点击左侧菜单锚链接跳转
 
 ## Todo
 

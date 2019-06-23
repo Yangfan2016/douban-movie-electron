@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { BrowserRouter, Link } from 'react-router-dom';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
@@ -11,27 +11,39 @@ import TopNav from './components/TopNav';
 
 moment.locale('zh-cn');
 
-function routerBeforeEnterHook(path: string) {
-  // 滚动条复位，回到原点
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-  // 取消所有请求
-  window.cancalXHRList.forEach((source: CancelTokenSource) => {
-    source.cancel("cancel xhr");
-  });
-}
-
 const menuList = [
-  ["/home#hash-top", "推荐"],
-  ["/home#hash-hotshow", "正在热映"],
-  ["/home#hash-newmovie", "新片榜"],
-  ["/home#hash-weekly", "口碑榜"],
-  ["/home#hash-top250", "Top 250"]
+  ["#hash-top", "推荐"],
+  ["#hash-hotshow", "正在热映"],
+  ["#hash-newmovie", "新片榜"],
+  ["#hash-weekly", "口碑榜"],
+  ["#hash-top250", "Top 250"]
 ];
 
 function App() {
+  let refMainBox: React.MutableRefObject<any> = useRef();
+
+  function routerBeforeEnterHook(path: string) {
+    if (path !== '/home') {
+      let el = refMainBox.current;
+      // 滚动条复位，回到原点
+      el && el.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      // 取消所有请求
+      window.cancalXHRList.forEach((source: CancelTokenSource) => {
+        source.cancel("cancel xhr");
+      });
+    }
+  }
+
+  function scrollToAchorView(selector: string) {
+    const parent = refMainBox.current;
+    if (parent === void 0) return;
+    const target = parent.querySelector(selector);
+    target && target.scrollIntoView();
+  }
+
   return (
     <LocaleProvider locale={zhCN}>
       <div className="App">
@@ -45,9 +57,9 @@ function App() {
                 menuList.map((item: string[], index: number) => {
                   return (
                     <li className="list-item" key={index}>
-                      <a href={item[0]}>
+                      <Link to='/home' onClick={() => scrollToAchorView(item[0])}>
                         <h3 className="title">{item[1]}</h3>
-                      </a>
+                      </Link>
                     </li>
                   );
                 })
@@ -55,7 +67,7 @@ function App() {
             </ul>
           </div>
           <div className="win-main">
-            <div className="mian-box">
+            <div className="mian-box" ref={refMainBox}>
               <RouterView beforeEnter={routerBeforeEnterHook} />
             </div>
           </div>

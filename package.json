@@ -2,7 +2,7 @@
   "name": "douban-movie-electron",
   "version": "0.1.0",
   "private": true,
-  "main": "main.js",
+  "main": "./main.js",
   "homepage": ".",
   "author": "yangfan2016 <15234408101@163.com>",
   "license": "MIT",
@@ -43,6 +43,10 @@
     "jest-pnp-resolver": "1.0.2",
     "jest-resolve": "23.6.0",
     "jest-watch-typeahead": "^0.2.1",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-server-http-proxy": "^0.1.0",
+    "koa-static": "^5.0.0",
     "lodash": "^4.17.11",
     "mini-css-extract-plugin": "0.5.0",
     "moment": "^2.24.0",
@@ -71,11 +75,13 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "NODE_ENV=production node scripts/build.js",
+    "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "server": "node server/controllers/index.js",
-    "electron-dev": "nodemon --watch ./main.js --exec 'yarn start & NODE_ENV=development electron .'",
-    "electron-start": "nodemon --watch ./main.js --exec 'NODE_ENV=production && electron .'"
+    "electron-dev": "nodemon --watch ./main.js --exec 'NODE_ENV=development electron .'",
+    "electron-start": "nodemon --watch ./main.js --exec 'NODE_ENV=production && electron .'",
+    "pack": "electron-builder --dir",
+    "dist": "rm -rf ./dist && electron-builder"
   },
   "eslintConfig": {
     "extends": "react-app"
