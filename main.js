@@ -112,7 +112,6 @@ if (process.env.NODE_ENV !== 'development') {
   });
 }
 
-
 app.on('ready', () => {
   let mainWindow = new BrowserWindow({
     width: 1240,
@@ -135,12 +134,12 @@ app.on('ready', () => {
 
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+
 });
 
 app.on('before-quit', () => {
   // stop api server
   if (apiServer) {
-    apiServer.close();
-    console.log(`Server stopped: ${server.url}`);
+    process.exit();
   }
 });
