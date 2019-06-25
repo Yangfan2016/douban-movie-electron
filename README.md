@@ -1,46 +1,52 @@
-## douban-movie-web
-> The proj is constructing...
+## douban-movie-electron
+> The proj is constructing...  
+项目还在施工中 👷
 
-[![GitHub stars](https://img.shields.io/github/stars/Yangfan2016/douban-movie-web.svg?color=green)](https://github.com/Yangfan2016/douban-movie-web) 
-[![GitHub forks](https://img.shields.io/github/forks/Yangfan2016/douban-movie-web.svg)](https://github.com/Yangfan2016/douban-movie-web)
+
+
+<p align="center">
+  <img src="./assets/icon.png" width="300px">
+</p>
+<p align="center">
+  <a href="https://github.com/Yangfan2016/douban-movie-electron"><img
+      src="https://img.shields.io/github/stars/Yangfan2016/douban-movie-electron.svg?color=green&style=flat-square"
+      alt="License"></a>
+  <a href="https://github.com/Yangfan2016/douban-movie-electron"><img
+      src="https://img.shields.io/github/forks/Yangfan2016/douban-movie-electron.svg?style=flat-square"
+      alt="License"></a>
+  <a href="https://github.com/Yangfan2016/douban-movie-electron/blob/master/LICENSE"><img
+      src="https://img.shields.io/github/license/Yangfan2016/douban-movie-electron.svg?style=flat-square"
+      alt="License"></a>
+</p>
+
+> 基于 Electron, React, React-router, Typescript 一款桌面豆瓣电影应用
+
+---
+
+
 
 ### Start
 
 ```bash
 # install fe pkg
 $ yarn
+# preivew
+$ yarn electron-dev
 # build
 $ yarn build
-# install server pkg
-$ cd server 
-$ yarn
-$ cd ../
-# run server
-$ yarn serve
-```
-
-```
-You can now view douban-movie-web in the browser.
-
-  Local: http://localhost:9876/
+# pack
+$ yarn dist
 
 ```
 
-
-![photo-004](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-web-xm001.png?raw=true)
 
 ### Preview
 
-- home
-![photo-001](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-web-001.png?raw=true)
-- detail
-![photo-002](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-web-002.png?raw=true)
-- play
-![photo-003](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-web-003.png?raw=true)
-- search
-![photo-005](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-web-005.png?raw=true)
-- 404
-![photo-006](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-web-006.png?raw=true)
+![photo-001](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-001.png?raw=true)
+![photo-002](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-002.png?raw=true)
+![photo-003](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-003.png?raw=true)
+![photo-004](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-004.png?raw=true)
+![photo-005](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-005.png?raw=true)
 
 
 ### Todo & Done
@@ -68,16 +74,6 @@ You can now view douban-movie-web in the browser.
 #### 搜索详情页
 
 - [x] 搜索信息列表
-
-#### 标签详情页
-
-- [ ] 搜索信息列表
-
-#### 票房页
-
-- [ ] 评分排行图表
-- [ ] 地域分布图表
-- [ ] 电影标签分布图表
 
 
 ### Tech

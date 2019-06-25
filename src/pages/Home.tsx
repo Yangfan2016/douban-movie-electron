@@ -14,6 +14,7 @@ import imgBanner003 from '../assets/banner-003.jpg';
 import imgBanner004 from '../assets/banner-004.jpg';
 import imgBanner005 from '../assets/banner-005.jpg';
 
+
 // 懒加载的图片高度
 const IMG_HEIGHT = 220;
 const IMG_BIG_HEIGHT = IMG_HEIGHT * 2;

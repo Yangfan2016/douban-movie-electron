@@ -7,6 +7,20 @@
   "author": "yangfan2016 <15234408101@163.com>",
   "license": "MIT",
   "dependencies": {
+    "antd": "^3.16.3",
+    "axios": "^0.18.0",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-server-http-proxy": "^0.1.0",
+    "koa-static": "^5.0.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-lazy-load": "^3.0.13",
+    "react-router-dom": "^5.0.0"
+  },
+  "devDependencies": {
     "@babel/core": "7.2.2",
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@svgr/webpack": "4.1.0",
@@ -14,8 +28,7 @@
     "@types/node": "11.13.0",
     "@types/react": "16.8.13",
     "@types/react-dom": "16.8.3",
-    "antd": "^3.16.3",
-    "axios": "^0.18.0",
+    "@types/lodash": "^4.14.123",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -27,7 +40,6 @@
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
-    "electron-store": "^3.2.0",
     "eslint": "5.12.0",
     "eslint-config-react-app": "^3.0.8",
     "eslint-loader": "2.1.1",
@@ -43,25 +55,15 @@
     "jest-pnp-resolver": "1.0.2",
     "jest-resolve": "23.6.0",
     "jest-watch-typeahead": "^0.2.1",
-    "koa": "^2.7.0",
-    "koa-router": "^7.4.0",
-    "koa-server-http-proxy": "^0.1.0",
-    "koa-static": "^5.0.0",
-    "lodash": "^4.17.11",
     "mini-css-extract-plugin": "0.5.0",
-    "moment": "^2.24.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
-    "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-dev-utils": "^8.0.0",
-    "react-dom": "^16.8.6",
-    "react-lazy-load": "^3.0.13",
-    "react-router-dom": "^5.0.0",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
@@ -71,7 +73,11 @@
     "webpack": "4.28.3",
     "webpack-dev-server": "3.1.14",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.3"
+    "workbox-webpack-plugin": "3.6.3",
+    "http-proxy-middleware": "^0.19.1",
+    "electron": "4.1.3",
+    "electron-builder": "^20.40.2",
+    "nodemon": "^1.18.10"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -83,6 +89,25 @@
     "pack": "electron-builder --dir",
     "dist": "rm -rf ./dist && electron-builder"
   },
+  "build": {
+    "appId": "douban-movie-electron",
+    "files": [
+      "package.json",
+      "node_modules/**/*",
+      "build/**/*",
+      "assets",
+      "server",
+      "main.js",
+      "app.config.js"
+    ],
+    "mac": {
+      "category": "music",
+      "target": [
+        "dmg"
+      ],
+      "icon": "./assets/icon.png"
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -92,13 +117,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "@types/lodash": "^4.14.123",
-    "http-proxy-middleware": "^0.19.1",
-    "electron": "4.1.3",
-    "electron-builder": "^20.40.2",
-    "nodemon": "^1.18.10"
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",

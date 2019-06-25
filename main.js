@@ -129,7 +129,7 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'development') {
     mainWindow.loadURL('http://localhost:3000');
   } else {
-    mainWindow.loadFile(`./build/index.html`);
+    mainWindow.loadURL(`file:///${__dirname}/build/index.html`);
   }
 
   const menu = Menu.buildFromTemplate(template);
