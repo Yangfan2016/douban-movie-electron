@@ -7,7 +7,7 @@ const { appBuild } = require("../config/paths");
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 process.env.REACT_APP_SERVER_URL = server.url;
-process.env.PUBLIC_URL = appBuild;
+// process.env.PUBLIC_URL = appBuild;
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will

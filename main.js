@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron')
 const apiServer = require("./server/app");
 const { server } = require("./app.config");
-
+const path = require("path");
 
 const template = [
   {
@@ -129,7 +129,7 @@ app.on('ready', () => {
   if (process.env.NODE_ENV === 'development') {
     mainWindow.loadURL('http://localhost:3000');
   } else {
-    mainWindow.loadURL(`file:///${__dirname}/build/index.html`);
+    mainWindow.loadFile(path.join(__dirname, "./build/index.html"));
   }
 
   const menu = Menu.buildFromTemplate(template);
