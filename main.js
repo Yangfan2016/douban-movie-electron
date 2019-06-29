@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
 const apiServer = require("./server/app");
 const { server } = require("./app.config");
 const path = require("path");
@@ -121,9 +121,6 @@ app.on('ready', () => {
     transparent: true,
     backgroundColor: "#99333333", // #<aarrggbb>
     titleBarStyle: "hiddenInset",
-    webPreferences: {
-      webSecurity: false,
-    }
   });
 
   if (process.env.NODE_ENV === 'development') {
@@ -134,6 +131,31 @@ app.on('ready', () => {
 
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+
+  let playWin = null;
+  ipcMain.on("open-page-video", (ev, info) => {
+    if (playWin) playWin.destroy();
+
+    playWin = new BrowserWindow({
+      width: 1000,
+      height: 430,
+      titleBarStyle: "hiddenInset",
+    });
+
+    playWin.loadFile(path.join(__dirname, "./public/play.html"), {
+      query: {
+        src: info,
+      }
+    });
+
+    playWin.focus();
+  });
+
+  ipcMain.on("open-dialog-msg", (ev, info) => {
+    dialog.showMessageBox(playWin, {
+      message: info,
+    });
+  });
 
 });
 

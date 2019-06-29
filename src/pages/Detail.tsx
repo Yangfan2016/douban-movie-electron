@@ -4,6 +4,7 @@ import moment from 'moment';
 import PageSkeleton from '../skeletons/Detail';
 import { getDetail } from '../api';
 import '../css/Detail.css';
+const { ipcRenderer } = (global as any).electron;
 
 
 export default function (props: iDetailProps) {
@@ -33,16 +34,11 @@ export default function (props: iDetailProps) {
     }
   }
   function playThisVideo(src: string, index: number) {
-    setCurrentPlayData({
-      src,
-      index,
-      isAutoPlay: true,
-    });
+    ipcRenderer.send("open-page-video", src);
   }
 
   function openPlayBox(src: string) {
     playThisVideo(src, 0);
-    setIsOpenPlayBox(true);
   }
 
   function closePlayBox() {

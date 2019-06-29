@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter,HashRouter, Link } from 'react-router-dom';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
@@ -47,7 +47,7 @@ function App() {
   return (
     <LocaleProvider locale={zhCN}>
       <div className="App">
-        <BrowserRouter>
+        <HashRouter>
           <div className="header">
             <TopNav />
           </div>
@@ -71,7 +71,7 @@ function App() {
               <RouterView beforeEnter={routerBeforeEnterHook} />
             </div>
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     </LocaleProvider>
   );

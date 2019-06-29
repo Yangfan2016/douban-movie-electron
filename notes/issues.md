@@ -37,3 +37,10 @@
 - 需要在组件卸载时，~~取消请求~~，和其他异步任务，订阅事件
 - ~~监听路由变化，将滚动条重置到页面顶部~~
 - 404 错误页的编写
+
+
+## Attention
+
+- 由于 electron 是本地加载，所以不能用 history api
+，react-router 只用 hashRouter
+
