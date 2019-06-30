@@ -114,9 +114,9 @@ if (process.env.NODE_ENV !== 'development') {
 
 app.on('ready', () => {
   let mainWindow = new BrowserWindow({
-    width: 1240,
+    width: 1160,
     height: 720,
-    minWidth: 1240,
+    minWidth: 1160,
     minHeight: 720,
     transparent: true,
     backgroundColor: "#99333333", // #<aarrggbb>
@@ -133,20 +133,27 @@ app.on('ready', () => {
   Menu.setApplicationMenu(menu);
 
   let playWin = null;
+
   ipcMain.on("open-page-video", (ev, info) => {
     if (playWin) playWin.destroy();
 
     playWin = new BrowserWindow({
-      width: 1000,
-      height: 430,
+      width: 1100,
+      height: 500,
       titleBarStyle: "hiddenInset",
     });
 
-    playWin.loadFile(path.join(__dirname, "./public/play.html"), {
+    let options = {
       query: {
-        src: info,
+        info: JSON.stringify(info),
       }
-    });
+    };
+
+    if (process.env.NODE_ENV === 'development') {
+      playWin.loadFile(path.join(__dirname, "./public/play.html"), options);
+    } else {
+      playWin.loadFile(path.join(__dirname, "./build/play.html"), options);
+    }
 
     playWin.focus();
   });

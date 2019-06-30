@@ -18,7 +18,7 @@ body, div, p, span, a, img, ul, ol, h1, h2, h3, h4, h5, h6 {
   --foreColor: #fff;
   --shallowColor: rgba(255, 255, 255, .2);
   --oneOfSix: 16.666667%;
-  --sideWidth: 200px;
+  --sideWidth: 120px;
   --pageWidth: 1000px;
   --headBarHeight: 80px;
 }
@@ -52,7 +52,7 @@ body {
 }
 
 .raw-title {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: var(--foreColor);
 }
 
@@ -93,15 +93,16 @@ body {
 
 .menu-list .list-item .title {
   padding: 0 0 0 5px;
-  border-left-width: 1px;
+  border-left-width: 2px;
   border-left-style: solid;
   border-left-color: transparent;
   color: var(--foreColor);
   transition: all 0.2 ease;
 }
 
-.menu-list .list-item .title:hover {
+.menu-list .list-item .title:hover, .menu-list .list-item .title.active {
   color: var(--hoverColor);
+  border-color: var(--hoverColor);
 }
 
 /* ant-tag */

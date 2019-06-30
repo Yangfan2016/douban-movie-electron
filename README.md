@@ -47,7 +47,7 @@ $ yarn dist
 ![photo-003](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-003.png?raw=true)
 ![photo-004](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-004.png?raw=true)
 ![photo-005](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-005.png?raw=true)
-
+![photo-006](https://github.com/Yangfan2016/PicBed/blob/master/Personal/douban-movie-electron-006.png?raw=true)
 
 ### Todo & Done
 

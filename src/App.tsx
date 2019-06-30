@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { BrowserRouter,HashRouter, Link } from 'react-router-dom';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
@@ -21,6 +21,7 @@ const menuList = [
 
 function App() {
   let refMainBox: React.MutableRefObject<any> = useRef();
+  let [activeIndex,setActiveIndex]=useState(0);
 
   function routerBeforeEnterHook(path: string) {
     if (path !== '/home') {
@@ -57,8 +58,8 @@ function App() {
                 menuList.map((item: string[], index: number) => {
                   return (
                     <li className="list-item" key={index}>
-                      <Link to='/home' onClick={() => scrollToAchorView(item[0])}>
-                        <h3 className="title">{item[1]}</h3>
+                      <Link to='/home' onClick={() => {scrollToAchorView(item[0]);setActiveIndex(index)}}>
+                        <h4 className={["title",index===activeIndex?"active":""].join(" ")}>{item[1]}</h4>
                       </Link>
                     </li>
                   );

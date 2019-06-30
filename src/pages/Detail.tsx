@@ -4,7 +4,7 @@ import moment from 'moment';
 import PageSkeleton from '../skeletons/Detail';
 import { getDetail } from '../api';
 import '../css/Detail.css';
-const { ipcRenderer } = (global as any).electron;
+const { ipcRenderer } = (window as any).electron;
 
 
 export default function (props: iDetailProps) {
@@ -33,12 +33,15 @@ export default function (props: iDetailProps) {
       galleryBoxEl.style.width = `${width}px`;
     }
   }
-  function playThisVideo(src: string, index: number) {
-    ipcRenderer.send("open-page-video", src);
+  function playThisVideo(src: string, title?: string) {
+    ipcRenderer.send("open-page-video", {
+      src,
+      title,
+    });
   }
 
-  function openPlayBox(src: string) {
-    playThisVideo(src, 0);
+  function openPlayBox(src: string,title?:string) {
+    playThisVideo(src, title);
   }
 
   function closePlayBox() {
@@ -162,7 +165,7 @@ export default function (props: iDetailProps) {
                                 type="play-circle"
                                 theme="filled"
                                 className="img-icon"
-                                onClick={(ev) => { openPlayBox(detailData.trailer_urls[currentPlayData.index]) }} />
+                                onClick={(ev) => { openPlayBox(detailData.trailer_urls[currentPlayData.index],detailData.title) }} />
                             </>
                           )}
                           <img src={image} alt={alt} />
@@ -319,8 +322,7 @@ export default function (props: iDetailProps) {
                   <List.Item
                     className={["list-item", index === currentPlayData.index ? "active" : ""].join(" ")}
                     key={item.id}
-                    extra={<img alt="logo" src={item.medium} />}
-                    onClick={(ev) => { playThisVideo(item.resource_url, index) }} >
+                    extra={<img alt="logo" src={item.medium} />} >
                     <List.Item.Meta
                       title={item.title}
                     />

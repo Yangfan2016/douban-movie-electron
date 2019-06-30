@@ -1,11 +1,12 @@
-const {ipcRenderer}=require("electron");
 const url = require("url");
-const qs=require("qs");
+const qs = require("querystring");
 
 const { query } = url.parse(window.location.href);
-const { src } = qs.parse(query);
-
+const { info } = qs.parse(query);
+const { src, title } = JSON.parse(info);
 let video = document.getElementById("video");
 video.src = src;
-ipcRenderer.send("open-dialog-msg","Please open the volume");
 
+
+const titleBar = document.getElementById("js-title-bar");
+titleBar.innerHTML = title;

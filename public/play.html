@@ -9,7 +9,19 @@
   <style>
     html,
     body,
-    video {
+    div,
+    p,
+    span,
+    a,
+    img,
+    ul,
+    ol,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       padding: 0;
       margin: 0;
     }
@@ -18,21 +30,42 @@
     body {
       width: 100%;
       height: 100%;
+      overflow: hidden;
+    }
+
+    html {
+      font-size: 20px;
     }
 
     body {
+      font-family: numFont, PingFangSC-Regular, Tahoma, "Microsoft Yahei", sans-serif;
+      font-size: .8rem;
+      user-select: none;
       background-color: #000;
+      /* drag app window */
+      -webkit-app-region: drag;
     }
 
     .play-video {
       width: 100%;
       height: 100%;
     }
+
+    .play-title {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+      color: #fff;
+    }
   </style>
 </head>
 
 <body>
-  <video id="video" class="play-video" controls muted autoplay></video>
+  <h4 class="play-title" id="js-title-bar"></h4>
+  <video class="play-video" id="video" controls muted autoplay></video>
   <script src="../renderer.js"></script>
 </body>
 
