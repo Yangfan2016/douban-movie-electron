@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { List, Pagination, Affix } from 'antd';
+import { List, Pagination } from 'antd';
 import { ListSkeleton } from '../skeletons/Home';
-import TopNav from '../components/TopNav';
-import Footer from '../components/Footer';
 import { getContentBySearch, getHotShowing } from '../api';
 import { reSerialize } from '../utils';
 import '../css/Search.css';
@@ -20,8 +18,6 @@ export default function (props: iSearchProps) {
   let [searchData, setSearchData] = useState<any>({});
   let [hotShowList, setHotShowList] = useState([]);
   let [isLoadingHotShow, setIsLoadingHotShow] = useState(true);
-  let refPageBox: React.MutableRefObject<any> = useRef();
-  let refRateBox: React.MutableRefObject<any> = useRef();
 
 
   function changeSearchData(current: number) {
@@ -48,26 +44,12 @@ export default function (props: iSearchProps) {
         setHotShowList(subjects);
         setIsLoadingHotShow(false);
 
-        var refPageBoxHeight = window.getComputedStyle(refPageBox.current)["height"];
-        var refRateBoxHeight = window.getComputedStyle(refRateBox.current)["height"];
-        if (refRateBoxHeight && refPageBoxHeight) {
-          refPageBoxHeight = refPageBoxHeight.replace("px", "");
-          refRateBoxHeight = refRateBoxHeight.replace("px", "");
-          if (+refRateBoxHeight > +refPageBoxHeight) {
-            refPageBox.current.style.cssText = `;min-height:${refRateBoxHeight}px;`;
-          }
-
-        }
-
       });
   }, []);
 
   return (
     <div>
-      <div className="header clearfix">
-        <TopNav />
-      </div>
-      <div className="page page-search" ref={refPageBox}>
+      <div className="page page-search">
         <div className="search-result-list">
           <List
             itemLayout="vertical"
@@ -141,36 +123,33 @@ export default function (props: iSearchProps) {
                 </List.Item>
               )
             }} />
-          <Pagination onChange={changeSearchData} total={searchData.total} />
+          <Pagination onChange={changeSearchData} total={searchData.total} hideOnSinglePage />
         </div>
-        <Affix offsetTop={100} className="rate-box">
-          <div ref={refRateBox}>
-            <div className="line-raw">
-              <h2 className="raw-title">热映榜</h2>
-            </div>
-            <ul className="goodbox">
-              {
-                isLoadingHotShow ?
-                  <ListSkeleton row={2} /> :
-                  hotShowList.map((item: any, index: number) => {
-                    let { id, title, rating } = item;
-                    let { average } = rating;
-                    return (
-                      <li className="goodbox-rate" key={index}>
-                        <Link to={`/detail/${id}`}>
-                          <h3 className="title">{title}</h3>
-                          <span className="rank">{index + 1}</span>
-                          <span className="box">{average} 分</span>
-                        </Link>
-                      </li>
-                    );
-                  })
-              }
-            </ul>
+        <div className="rate-box">
+          <div className="line-raw">
+            <h2 className="raw-title">热映榜</h2>
           </div>
-        </Affix>
+          <ul className="goodbox">
+            {
+              isLoadingHotShow ?
+                <ListSkeleton row={2} /> :
+                hotShowList.map((item: any, index: number) => {
+                  let { id, title, rating } = item;
+                  let { average } = rating;
+                  return (
+                    <li className="goodbox-rate" key={index}>
+                      <Link to={`/detail/${id}`}>
+                        <h3 className="title">{title}</h3>
+                        <span className="rank">{index + 1}</span>
+                        <span className="box">{average} 分</span>
+                      </Link>
+                    </li>
+                  );
+                })
+            }
+          </ul>
+        </div>
       </div>
-      <Footer />
     </div>
   );
 

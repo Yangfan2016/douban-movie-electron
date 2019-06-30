@@ -234,7 +234,7 @@
 }
 
 .page-home .block {
-  margin: 0 0 30px 0;
+  margin: 30px 0;
 }
 
 .block-weekly .weekly-box {
@@ -360,7 +360,7 @@
 }
 
 .block-weekly .line-raw .spotbox .spot:nth-of-type(1) {
-  top: 40%;
+  top: 20px;
   width: 20px;
   height: 50px;
   background-image: linear-gradient(var(--rankThird), #fff);
@@ -368,7 +368,7 @@
 }
 
 .block-weekly .line-raw .spotbox .spot:nth-of-type(2) {
-  top: -30px;
+  top: 10px;
   width: 26px;
   height: 50px;
   background-image: linear-gradient(var(--rankFirst), #fff);
@@ -376,6 +376,7 @@
 }
 
 .block-weekly .line-raw .spotbox .spot:nth-of-type(3) {
+  top: 30px;
   width: 14px;
   height: 50px;
   background-image: linear-gradient(var(--rankSecond), #fff);
@@ -427,10 +428,10 @@
 }
 
 .rate-box {
-  position: relative;
-  top: -45px;
+  position: absolute;
+  top: 0;
   right: 0;
-  width: calc(var(-pageWidth) - var(--oneOfSix) * 4);
+  width: calc(var(--pageWidth) - var(--oneOfSix) * 4);
 }
 
 .rate-box .goodbox {

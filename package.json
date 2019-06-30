@@ -98,7 +98,6 @@
       "assets",
       "server",
       "main.js",
-      "renderer.js",
       "app.config.js"
     ],
     "mac": {

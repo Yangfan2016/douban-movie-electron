@@ -42,5 +42,5 @@
 ## Attention
 
 - 由于 electron 是本地加载，所以不能用 history api
-，react-router 只用 hashRouter
+，react-router 只用 hashRouter （但是，hash变化，页面没有触发变化）
 

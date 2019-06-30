@@ -8,6 +8,13 @@ module.exports = function (app) {
       '^/api': '/v2', // 重写路径
     },
   }));
+  app.use(proxy('/api2', {
+    target: 'https://douban.uieee.com/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api2': '/v2', // 重写路径
+    },
+  }));
   app.use(proxy('/bing', {
     target: 'https://www.bing.com/',
     changeOrigin: true,

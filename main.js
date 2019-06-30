@@ -3,15 +3,49 @@ const apiServer = require("./server/app");
 const { server } = require("./app.config");
 const path = require("path");
 
+const isProd = process.env.NODE_ENV !== "development";
+
+const SYS_MAP = {
+  'darwin': {
+    shortcuts: {
+      'devtools': 'Alt+Command+I'
+    }
+  },
+  'win32': {
+    shortcuts: {
+      'devtools': 'Ctrl+Shift+I'
+    }
+  },
+  'linux': {
+    shortcuts: {
+      'devtools': 'Ctrl+Shift+I'
+    }
+  }
+};
+
+const SYS_CONF_MAP = SYS_MAP[process.platform] || {};
+
 const template = [
   {
-    label: '编辑',
+    label: "app",
     submenu: [
       {
-        label: '剪切',
-        accelerator: 'CmdOrCtrl+X',
-        role: 'cut'
+        label: '关于 douban-movie-electron',
+        role: 'about',
       },
+      {
+        type: "separator",
+      },
+      {
+        label: '退出',
+        accelerator: 'Cmd+Q',
+        role: 'quit'
+      }
+    ]
+  },
+  {
+    label: "编辑",
+    submenu:[
       {
         label: '复制',
         accelerator: 'CmdOrCtrl+C',
@@ -21,69 +55,11 @@ const template = [
         label: '粘贴',
         accelerator: 'CmdOrCtrl+V',
         role: 'paste'
-      },
-      {
-        label: '全选',
-        accelerator: 'CmdOrCtrl+A',
-        role: 'selectall'
-      }
-    ]
-  },
-  {
-    label: '查看',
-    submenu: [
-      {
-        label: '重载',
-        accelerator: 'CmdOrCtrl+R',
-        click: function (item, focusedWindow) {
-          if (focusedWindow) {
-            // 重载之后, 刷新并关闭所有的次要窗体
-            if (focusedWindow.id === 1) {
-              BrowserWindow.getAllWindows().forEach(function (win) {
-                if (win.id > 1) {
-                  win.close();
-                }
-              });
-            }
-            focusedWindow.reload();
-          }
-        }
-      },
-      {
-        label: '切换全屏',
-        accelerator: (function () {
-          if (process.platform === 'darwin') {
-            return 'Ctrl+Command+F';
-          } else {
-            return 'F11';
-          }
-        })(),
-        click: function (item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
-          }
-        }
-      },
-      {
-        label: '切换开发者工具',
-        accelerator: (function () {
-          if (process.platform === 'darwin') {
-            return 'Alt+Command+I';
-          } else {
-            return 'Ctrl+Shift+I';
-          }
-        })(),
-        click: function (item, focusedWindow) {
-          if (focusedWindow) {
-            focusedWindow.toggleDevTools();
-          }
-        }
       }
     ]
   },
   {
     label: '窗口',
-    role: 'window',
     submenu: [
       {
         label: '最小化',
@@ -91,21 +67,35 @@ const template = [
         role: 'minimize'
       },
       {
+        label: '重载',
+        accelerator: 'CmdOrCtrl+R',
+        role: 'reload'
+      },
+      {
         label: '关闭',
         accelerator: 'CmdOrCtrl+W',
         role: 'close'
-      },
+      }
+    ]
+  },
+  {
+    label: '调试',
+    submenu: [
       {
-        label: '退出',
-        accelerator: 'Cmd+Q',
-        role: 'quit'
+        label: '切换开发者工具',
+        accelerator: SYS_CONF_MAP['shortcuts']['devtools'],
+        click: function (_ev, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.toggleDevTools();
+          }
+        }
       }
     ]
   }
 ];
 
 
-if (process.env.NODE_ENV !== 'development') {
+if (isProd) {
   // start api server
   apiServer.listen(server.port, () => {
     console.log(server.url);
@@ -123,10 +113,10 @@ app.on('ready', () => {
     titleBarStyle: "hiddenInset",
   });
 
-  if (process.env.NODE_ENV === 'development') {
-    mainWindow.loadURL('http://localhost:3000');
-  } else {
+  if (isProd) {
     mainWindow.loadFile(path.join(__dirname, "./build/index.html"));
+  } else {
+    mainWindow.loadURL('http://localhost:3000');
   }
 
   const menu = Menu.buildFromTemplate(template);
@@ -149,16 +139,16 @@ app.on('ready', () => {
       }
     };
 
-    if (process.env.NODE_ENV === 'development') {
-      playWin.loadFile(path.join(__dirname, "./public/play.html"), options);
-    } else {
+    if (isProd) {
       playWin.loadFile(path.join(__dirname, "./build/play.html"), options);
+    } else {
+      playWin.loadFile(path.join(__dirname, "./public/play.html"), options);
     }
 
     playWin.focus();
   });
 
-  ipcMain.on("open-dialog-msg", (ev, info) => {
+  ipcMain.on("open-dialog-msg", (_ev, info) => {
     dialog.showMessageBox(playWin, {
       message: info,
     });

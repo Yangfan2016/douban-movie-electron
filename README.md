@@ -5,7 +5,7 @@
 
 
 <p align="center">
-  <img src="./assets/icon.png" width="300px">
+  <img src="./assets/logo.png" width="300px">
 </p>
 <p align="center">
   <a href="https://github.com/Yangfan2016/douban-movie-electron"><img

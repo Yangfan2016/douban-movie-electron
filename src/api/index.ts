@@ -49,8 +49,10 @@ export function getDetail(id: string) {
 }
 
 // 北美票房榜
-export function getGoodbox() {
-  return http().get("/us_box");
+export function getGoodbox(params?: iRequestGetData) {
+  return http().get("/us_box", {
+    params
+  });
 }
 
 // 搜索条目

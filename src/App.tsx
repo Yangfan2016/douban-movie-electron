@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { BrowserRouter,HashRouter, Link } from 'react-router-dom';
+import { HashRouter as Router, Link } from 'react-router-dom';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
@@ -21,7 +21,7 @@ const menuList = [
 
 function App() {
   let refMainBox: React.MutableRefObject<any> = useRef();
-  let [activeIndex,setActiveIndex]=useState(0);
+  let [activeIndex, setActiveIndex] = useState(0);
 
   function routerBeforeEnterHook(path: string) {
     if (path !== '/home') {
@@ -29,7 +29,6 @@ function App() {
       // 滚动条复位，回到原点
       el && el.scrollTo({
         top: 0,
-        behavior: "smooth",
       });
       // 取消所有请求
       window.cancalXHRList.forEach((source: CancelTokenSource) => {
@@ -48,7 +47,7 @@ function App() {
   return (
     <LocaleProvider locale={zhCN}>
       <div className="App">
-        <HashRouter>
+        <Router>
           <div className="header">
             <TopNav />
           </div>
@@ -58,8 +57,8 @@ function App() {
                 menuList.map((item: string[], index: number) => {
                   return (
                     <li className="list-item" key={index}>
-                      <Link to='/home' onClick={() => {scrollToAchorView(item[0]);setActiveIndex(index)}}>
-                        <h4 className={["title",index===activeIndex?"active":""].join(" ")}>{item[1]}</h4>
+                      <Link to='/home' onClick={() => { scrollToAchorView(item[0]); setActiveIndex(index) }}>
+                        <h4 className={["title", index === activeIndex ? "active" : ""].join(" ")}>{item[1]}</h4>
                       </Link>
                     </li>
                   );
@@ -72,7 +71,7 @@ function App() {
               <RouterView beforeEnter={routerBeforeEnterHook} />
             </div>
           </div>
-        </HashRouter>
+        </Router>
       </div>
     </LocaleProvider>
   );

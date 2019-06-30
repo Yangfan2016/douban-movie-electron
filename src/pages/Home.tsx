@@ -118,7 +118,9 @@ export default function () {
         setIsLoadingNewMovie(false);
       });
 
-    getGoodbox()
+    getGoodbox({
+      count:10,
+    })
       .then(({ data }: AxiosResponse) => {
         let { subjects, date } = data;
 
