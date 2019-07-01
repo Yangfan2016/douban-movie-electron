@@ -10,7 +10,7 @@ const { ipcRenderer } = (window as any).electron;
 export default function (props: iDetailProps) {
   let { params } = props.match;
 
-  let [currentPlayData, setCurrentPlayData] = useState<any>({
+  let [currentPlayData] = useState<any>({
     index: 0,
     isAutoPlay: true,
   });
@@ -40,7 +40,7 @@ export default function (props: iDetailProps) {
     });
   }
 
-  function openPlayBox(src: string,title?:string) {
+  function openPlayBox(src: string, title?: string) {
     playThisVideo(src, title);
   }
 
@@ -49,6 +49,7 @@ export default function (props: iDetailProps) {
   }
 
   useEffect(() => {
+
     getDetail(params.id)
       .then(({ data }: AxiosResponse) => {
         // 处理下数据
@@ -62,7 +63,7 @@ export default function (props: iDetailProps) {
         setIsLoadingDetail(false);
 
       });
-  }, []);
+  }, [props.match.params.id]);
 
   useEffect(() => {
     if (isLoadingDetail === true) return;
@@ -165,7 +166,7 @@ export default function (props: iDetailProps) {
                                 type="play-circle"
                                 theme="filled"
                                 className="img-icon"
-                                onClick={(ev) => { openPlayBox(detailData.trailer_urls[currentPlayData.index],detailData.title) }} />
+                                onClick={(ev) => { openPlayBox(detailData.trailer_urls[currentPlayData.index], detailData.title) }} />
                             </>
                           )}
                           <img src={image} alt={alt} />

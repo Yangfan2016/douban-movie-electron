@@ -112,3 +112,7 @@ body {
   border-color: var(--hoverColor);
   color: var(--foreColor);
 }
+
+.hide{
+  display: none;
+}

@@ -97,8 +97,7 @@ export default function () {
 
   }
 
-  useEffect(()=> {
-
+  useEffect(() => {
     getHotShowing({
       start: 0,
       count: 12,
@@ -119,7 +118,7 @@ export default function () {
       });
 
     getGoodbox({
-      count:10,
+      count: 10,
     })
       .then(({ data }: AxiosResponse) => {
         let { subjects, date } = data;

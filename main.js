@@ -2,6 +2,8 @@ const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
 const apiServer = require("./server/app");
 const { server } = require("./app.config");
 const path = require("path");
+const { exec } = require('child_process');
+
 
 const isProd = process.env.NODE_ENV !== "development";
 
@@ -45,7 +47,7 @@ const template = [
   },
   {
     label: "编辑",
-    submenu:[
+    submenu: [
       {
         label: '复制',
         accelerator: 'CmdOrCtrl+C',
@@ -100,6 +102,9 @@ if (isProd) {
   apiServer.listen(server.port, () => {
     console.log(server.url);
   });
+} else {
+  // start webpack-devserver
+  require("./scripts/start");
 }
 
 app.on('ready', () => {
@@ -158,7 +163,5 @@ app.on('ready', () => {
 
 app.on('before-quit', () => {
   // stop api server
-  if (apiServer) {
-    process.exit();
-  }
+  process.exit();
 });
