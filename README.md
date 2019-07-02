@@ -8,10 +8,10 @@
 <p align="center">
   <a href="https://github.com/Yangfan2016/douban-movie-electron"><img
       src="https://img.shields.io/github/stars/Yangfan2016/douban-movie-electron.svg?color=green&style=flat-square"
-      alt="License"></a>
+      alt="Starts"></a>
   <a href="https://github.com/Yangfan2016/douban-movie-electron"><img
       src="https://img.shields.io/github/forks/Yangfan2016/douban-movie-electron.svg?style=flat-square"
-      alt="License"></a>
+      alt="Forks"></a>
   <a href="https://github.com/Yangfan2016/douban-movie-electron/blob/master/LICENSE"><img
       src="https://img.shields.io/github/license/Yangfan2016/douban-movie-electron.svg?style=flat-square"
       alt="License"></a>
