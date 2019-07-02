@@ -1,6 +1,4 @@
 ## douban-movie-electron
-> The proj is constructing...  
-项目还在施工中 👷
 
 
 
