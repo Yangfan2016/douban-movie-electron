@@ -101,7 +101,7 @@
       "app.config.js"
     ],
     "mac": {
-      "category": "music",
+      "category": "public.app-category.productivity",
       "target": [
         "dmg"
       ],
