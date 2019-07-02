@@ -101,7 +101,7 @@
       "app.config.js"
     ],
     "mac": {
-      "category": "public.app-category.productivity",
+      "category": "public.app-category.video",
       "target": [
         "dmg"
       ],
